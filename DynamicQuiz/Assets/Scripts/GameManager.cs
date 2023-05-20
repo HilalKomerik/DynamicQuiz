@@ -23,6 +23,13 @@ public class GameManager : MonoBehaviour
     private GameObject trueBtn, falseBtn;
 
     int trueValue, falseValue;
+
+    int totalValue;
+
+    [SerializeField]
+    private GameObject resultsPanel;
+
+    ResultsManager resultsManager;
     void Start()
     {
         if (unanswered == null || unanswered.Count == 0)
@@ -31,6 +38,7 @@ public class GameManager : MonoBehaviour
         }
         trueValue = 0;
         falseValue = 0;
+        totalValue = 0;
         RandomQuestion();
     }
 
@@ -65,8 +73,10 @@ public class GameManager : MonoBehaviour
 
         if (unanswered.Count<=0)
         {
-            Debug.Log(trueValue);
-            Debug.Log(falseValue);
+            resultsPanel.SetActive(true);
+
+            resultsManager = Object.FindObjectOfType<ResultsManager>();
+            resultsManager.Results(trueValue, falseValue, totalValue); 
         }
         else
         {
@@ -79,6 +89,7 @@ public class GameManager : MonoBehaviour
         if (validQuestion.itTrue)
         {
             trueValue++;
+            totalValue += 100;
         }
         else
         {
@@ -93,6 +104,7 @@ public class GameManager : MonoBehaviour
         if (!validQuestion.itTrue)
         {
             trueValue++;
+            totalValue += 100;
         }
         else
         {
